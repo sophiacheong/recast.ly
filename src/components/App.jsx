@@ -1,23 +1,38 @@
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import Search from './Search.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
+import searchYouTube from '../lib/searchYouTube.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentVideo: exampleVideoData[0],
+      isLoading: true,
       videos: exampleVideoData,
-      current: exampleVideoData[0],
+      q: 'react tutorial',
     };
     this.onClickTitle = this.onClickTitle.bind(this);
+  }
+
+  componentDidMount() {
+    var options = {
+      key: YOUTUBE_API_KEY,
+      query: this.state.q,
+    };
+
+    searchYouTube(options, (data) => (
+      console.log(data))
+    );
   }
 
   onClickTitle(e) {
     this.state.videos.map((item) => {
       if (item.snippet.title === e.target.textContent) {
         this.setState({
-          current: item,
+          currentVideo: item,
         });
       }
     });
@@ -28,12 +43,12 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em><Search /></em> view goes here</h5></div>
+            <Search />
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.state.current} />
+            <VideoPlayer video={this.state.currentVideo} />
           </div>
           <div className="col-md-5">
             <VideoList videos={this.state.videos} onClickTitle={this.onClickTitle} />
