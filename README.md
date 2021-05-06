@@ -1,5 +1,6 @@
 # Exercise: Recast.ly #
-> This project was assigned to me as a student when attending Hack Reactor.
+> This was a pair-programming project was assigned to me as a student when attending Hack Reactor. <br />
+
 Your task is to build a YouTube Video Player app using React.
 
 ### React is Interesting in a Few Key Ways ###
